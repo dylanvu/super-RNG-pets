@@ -1,20 +1,35 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const {ipcMain} = require('electron');
+let path = require('path');
+
+ipcMain.on('close', (evt, arg) => {
+    app.quit();
+});
 
 function createWindow () {
     // Create the browser window.
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 350,
+        height: 575,
         webPreferences: {
-        nodeIntegration: true
-        }
+            nodeIntegration: true,
+            enableRemoteModule: true,
+            contextIsolation: false,
+            preload: __dirname + '/preload.js'
+        },
+        autoHideMenuBar: true,
+        frame: false,
+        // titleBarStyle: 'hidden',
+        icon: path.join(__dirname, '/sloth.png')
     })
+    // Ensure app is on top
+    win.setAlwaysOnTop(true, 'screen')
+
+    // Disable resizing
+    win.setResizable(false)
 
     //load the index.html from a url
     win.loadURL('http://localhost:3000');
-
-    // Open the DevTools.
-    win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -29,7 +44,7 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
-})
+});
 
 app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the

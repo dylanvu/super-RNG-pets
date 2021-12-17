@@ -1,9 +1,26 @@
-html {
+/* html {
   background-color: #4e9e09;
-}
+} */
 
 .App {
   text-align: center;
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none
+}
+
+.title-bar {
+  width: 100%;
+  -webkit-app-region: drag;
+  background-color: #4e9e09;
+  font-size: 1rem;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-weight: bold;
+  text-align: left;
 }
 
 .number {
@@ -21,9 +38,29 @@ html {
   margin-bottom: 5%;
 }
 
-button {
-  width: 150px;
-  background-color: #d6bd32;
-  border-radius: 10px;
-  font-size: 20px;
+.turn-buttons {
+  margin-bottom: 0.5rem;
+}
+
+.header {
+  margin-top: 0.8rem;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.setting {
+  margin-bottom: 1.5rem;
+  margin-top: 0.7rem;
+}
+
+.rules {
+  text-align: left;
+}
+
+.rules ul {
+  margin-left: 25px;
+}
+
+.rules ul ul {
+  margin-left: 25px;
 }
