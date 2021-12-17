@@ -28,7 +28,7 @@
 }
 
 .action {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 5%;
 }
 
@@ -40,6 +40,12 @@
 
 .turn-buttons {
   margin-bottom: 0.5rem;
+}
+
+.first-header {
+  /* Without the first top spacing */
+  font-weight: bold;
+  font-size: 1.4em;
 }
 
 .header {
@@ -63,4 +69,10 @@
 
 .rules ul ul {
   margin-left: 25px;
+}
+
+.help-shop {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }

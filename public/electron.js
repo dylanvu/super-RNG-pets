@@ -9,7 +9,7 @@ ipcMain.on('close', (evt, arg) => {
 function createWindow () {
     // Create the browser window.
     const win = new BrowserWindow({
-        width: 350,
+        width: 320,
         height: 575,
         webPreferences: {
             nodeIntegration: true,
@@ -19,14 +19,15 @@ function createWindow () {
         },
         autoHideMenuBar: true,
         frame: false,
-        // titleBarStyle: 'hidden',
-        icon: path.join(__dirname, '/sloth.png')
+        icon: path.join(__dirname, '/sloth.png'),
+        'use-content-size': true,
+        'enablePreferredSizeMode': true
     })
     // Ensure app is on top
     win.setAlwaysOnTop(true, 'screen')
 
     // Disable resizing
-    win.setResizable(false)
+    win.setResizable(false);
 
     //load the index.html from a url
     win.loadURL('http://localhost:3000');

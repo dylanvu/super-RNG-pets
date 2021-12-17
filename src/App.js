@@ -24,7 +24,7 @@ function App() {
   const [turn, setTurn] = useState(1);
   const [rolling, setRolling] = useState(false)
   const [number, setNumber] = useState(0);
-  const [action, setAction] = useState("Click to Roll");
+  const [action, setAction] = useState("Freeze/Unfreeze");
   const [prevAction, setPrevaction] = useState("");
   const [freeze, setFreeze] = useState(false);
   const [unique, setUnique] = useState(false);
@@ -35,7 +35,7 @@ function App() {
   const Roll = () => {
     if (free && IsFreeWill(turn, freeFreq, freeR1)) {
       // Check if free will is on and it's a free will round
-      setAction("Free Will! No RNG.");
+      setAction("Free Will");
       setNumber(0);
     } else {
       if (action !== "Click to Roll") {
@@ -43,16 +43,18 @@ function App() {
       }
       // Generate random numbers
       setRolling(true);
-      let random = []
-      for (let i = 0; i < 15; i++) {
+      let random = [];
+      let freezeOffset = 0;
+      freeze ? freezeOffset = 1 : freezeOffset = 0;
+      for (let i = 0; i < 12; i++) {
         if (turn < 3) {
-          random.push(GenerateRandom(1, 6));
+          random.push(GenerateRandom(1, 6 + freezeOffset));
         } else if (turn < 5) {
-          random.push(GenerateRandom(1, 7));
+          random.push(GenerateRandom(1, 7 + freezeOffset));
         } else if (turn < 9) {
-          random.push(GenerateRandom(1, 8));
+          random.push(GenerateRandom(1, 8 + freezeOffset));
         } else {
-          random.push(GenerateRandom(1, 9));
+          random.push(GenerateRandom(1, 9 + freezeOffset));
         }
       }
 
@@ -61,13 +63,13 @@ function App() {
         while(random.at(-1) === number) {
           random.pop();
           if (turn < 3) {
-            random.push(GenerateRandom(1, 6));
+            random.push(GenerateRandom(1, 6 + freezeOffset));
           } else if (turn < 5) {
-            random.push(GenerateRandom(1, 7));
+            random.push(GenerateRandom(1, 7 + freezeOffset));
           } else if (turn < 9) {
-            random.push(GenerateRandom(1, 8));
+            random.push(GenerateRandom(1, 8 + freezeOffset));
           } else {
-            random.push(GenerateRandom(1, 9));
+            random.push(GenerateRandom(1, 9 + freezeOffset));
           }
         }
       }
@@ -76,7 +78,8 @@ function App() {
       // Now cycle through for an "animation" and settle on the last option
       let cycle = () => {
         setNumber(random[index]);
-        setAction(actionMap[random[index]]);
+        freeze ? setAction(freezeMap[random[index]]) : setAction(actionMap[random[index]]);
+        // setAction(actionMap[random[index]]);
         index++;
         if (index < random.length) {
           setTimeout(cycle, 40);
@@ -112,7 +115,6 @@ function App() {
             <Tab>Roll</Tab>
             <Tab>Settings</Tab>
             <Tab>Help</Tab>
-            <Tab>Credits</Tab>
             <Tab onClick={(e) => {ipcRenderer.send('close');}}>Exit</Tab>
           </TabList>
           <TabPanels>
@@ -121,21 +123,21 @@ function App() {
               <div className="action">{action}</div>
               { rolling ? 
               <Button colorScheme='yellow' isLoading loadingText='Rolling...'></Button> : 
-              <Button leftIcon={<BsDice6/>} colorScheme='yellow' onClick={(e) => {
+              <Button width="100px" leftIcon={<BsDice6/>} colorScheme='yellow' onClick={(e) => {
                 if (!rolling) {
                   Roll();
                 }}}>Roll!</Button>
               }
               <div className="turn">Turn: {turn}</div>
               <div className="turn-buttons">
-                  <Button leftIcon={<FaLevelUpAlt/>} colorScheme='yellow' onClick={(e) => {
+                  <Button width="100px" leftIcon={<FaLevelUpAlt/>} colorScheme='yellow' onClick={(e) => {
                     ChangeTurn(turn + 1);
-                  }}>Next Turn</Button>
+                  }}>Turn</Button>
               </div>
               <div className="turn-buttons">
-                <Button leftIcon={<FaLevelDownAlt/>} colorScheme='yellow' onClick={(e) => {
+                <Button width="100px" leftIcon={<FaLevelDownAlt/>} colorScheme='yellow' onClick={(e) => {
                     ChangeTurn(turn - 1);
-                }}>Previous Turn</Button>
+                }}>Turn</Button>
               </div>
             </TabPanel>
             <TabPanel>
@@ -143,16 +145,20 @@ function App() {
                 <Button colorScheme='yellow' onClick={(e) => {
                   Reset();
                   }}>
-                    Reset
+                    Reset Rolls
                 </Button>
               </div>
+              <div>Changing any settings will reset the roll</div>
               <h1 className="header">
                 Free Will Settings
               </h1>
               <Divider/>
               <div className="setting">
                 <div>
-                  <Checkbox onChange={(e) => setFree(e.target.checked)}>
+                  <Checkbox onChange={(e) => {
+                    setFree(e.target.checked);
+                    Reset();
+                    }}>
                     <Tooltip hasArrow placement='top' label='Disable RNG for one round'>
                       Enable Free Will
                     </Tooltip>
@@ -160,17 +166,25 @@ function App() {
                 </div>
                 {free ?
                 <div>
+                  <br/>
                   <Tooltip hasArrow placement='top' label='After ___ turn(s) there will be a round without RNG'>
                     Frequency
                   </Tooltip>
-                  <NumberInput size='md' defaultValue={1} min={1} onChange={(valueString) => setFreefreq(parseInt(valueString))}>
+                  <NumberInput size='md' defaultValue={1} min={1} onChange={(valueString) => {
+                    setFreefreq(parseInt(valueString));
+                    Reset();
+                    }}>
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
                       <NumberDecrementStepper />
                     </NumberInputStepper>
                   </NumberInput>
-                  <Checkbox onChange={(e) => setFreeR1(e.target.checked)}>
+                  <br/>
+                  <Checkbox onChange={(e) => {
+                    setFreeR1(e.target.checked);
+                    Reset();
+                  }}>
                     <Tooltip hasArrow placement='top' label='Start with Free Will round 1'>
                       Free Will Start
                     </Tooltip>
@@ -183,33 +197,30 @@ function App() {
               <Divider/>
               <div className="setting">
                 <div>
-                  <Checkbox onChange={(e) => setFreeze(e.target.checked)}>
+                  <Checkbox onChange={(e) => {
+                    setFreeze(e.target.checked);
+                    Reset();
+                    }}>
                     <Tooltip hasArrow placement='top' label='Enable Freezing During RNG'>
-                    Freeze Mode
+                      Freeze Mode
                     </Tooltip>
                   </Checkbox>
                 </div>
                 <div>
-                  <Checkbox onChange={(e) => setUnique(e.target.checked)}>
+                  <Checkbox onChange={(e) => {
+                    setUnique(e.target.checked);
+                    Reset();
+                    }}>
                     <Tooltip hasArrow placement='top' label='No Two Same Rolls Back-to-back'>
                       Unique Rolls
                     </Tooltip>
                   </Checkbox>
                 </div>
-              </div>
-              <div className="setting">
-                <Button colorScheme='yellow' onClick={(e) => {
-                  Reset();
-                  }}>
-                    Apply Settings and Reset
-                </Button>
+                <Credits/>
               </div>
             </TabPanel>
             <TabPanel>
               <Help/>
-            </TabPanel>
-            <TabPanel>
-              <Credits/>
             </TabPanel>
           </TabPanels>
         </Tabs>
