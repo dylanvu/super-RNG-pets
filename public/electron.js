@@ -18,7 +18,7 @@ function createWindow () {
         },
         autoHideMenuBar: true,
         frame: false,
-        icon: path.join(__dirname, '/sloth.png'),
+        icon: path.join(__dirname, '/sloth.ico'),
         'use-content-size': true,
         'enablePreferredSizeMode': true
     })

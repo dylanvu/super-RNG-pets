@@ -1,8 +1,27 @@
 {
   "name": "super-rng-pets",
+  "author": "Dylan",
+  "description": "Electron Application to help play Super Auto Pets with an RNG twist",
   "version": "0.1.0",
   "private": true,
   "main": "public/electron.js",
+  "build": {
+    "appId": "com.electron.superrngpets",
+    "productName": "Super RNG Pets",
+    "files": ["build/**/*", "node_modules/**/*"],
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    }
+  },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
@@ -11,6 +30,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "electron": "^16.0.4",
+    "electron-builder": "^22.14.5",
     "framer-motion": "^4.1.17",
     "random-js": "^2.1.0",
     "react": "^17.0.2",
@@ -24,7 +44,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron-dev": "electron ."
+    "electron-dev": "electron .",
+    "electron:package:mac": "npm run build && electron-builder -m -c.extraMetadata.main=build/electron.js",
+    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
+    "electron:package:linux": "npm run build && electron-builder -l -c.extraMetadata.main=build/electron.js"
   },
   "eslintConfig": {
     "extends": [

@@ -13,3 +13,4 @@
 * https://stackoverflow.com/questions/46653325/close-electron-app-on-click-event
 * https://stackoverflow.com/questions/61021885/electron-window-require-is-not-a-function-even-with-nodeintegration-set-to-true?rq=1
 * https://stackoverflow.com/questions/31749625/make-a-link-from-electron-open-in-browser
+* https://mmazzarolo.com/blog/2021-08-12-building-an-electron-application-using-create-react-app/
