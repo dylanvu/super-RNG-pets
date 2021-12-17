@@ -2,15 +2,14 @@ const { app, BrowserWindow } = require('electron');
 const {ipcMain} = require('electron');
 let path = require('path');
 
-ipcMain.on('close', (evt, arg) => {
-    app.quit();
-});
-
 function createWindow () {
     // Create the browser window.
+    const largeHeight = 575;
+    const width = 320;
+    const height = 340;
     const win = new BrowserWindow({
-        width: 320,
-        height: 575,
+        width: width,
+        height: height,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -36,6 +35,27 @@ function createWindow () {
     win.webContents.on('new-window', function(e, url) {
         e.preventDefault();
         require('electron').shell.openExternal(url);
+    });
+
+    // controller code events
+    ipcMain.on('close', (evt, arg) => {
+        app.quit();
+    });
+
+    ipcMain.on('close', (evt, arg) => {
+        app.quit();
+    });
+    
+    ipcMain.on('shrink', (evt, arg) => {
+        win.setResizable(true);
+        win.setSize(width, height);
+        win.setResizable(false);
+    });
+    
+    ipcMain.on('large', (evt, arg) => {
+        win.setResizable(true);
+        win.setSize(width, largeHeight);
+        win.setResizable(false);
     });
 }
 

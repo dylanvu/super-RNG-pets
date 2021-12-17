@@ -31,7 +31,6 @@ function App() {
   const [free, setFree] = useState(false);
   const [freeFreq, setFreefreq] = useState(1);
   const [freeR1, setFreeR1] = useState(false);
-
   const Roll = () => {
     if (free && IsFreeWill(turn, freeFreq, freeR1)) {
       // Check if free will is on and it's a free will round
@@ -112,10 +111,10 @@ function App() {
         <div className="title-bar">Super RNG Pets</div>
         <Tabs>
           <TabList>
-            <Tab>Roll</Tab>
-            <Tab>Settings</Tab>
-            <Tab>Help</Tab>
-            <Tab onClick={(e) => {ipcRenderer.send('close');}}>Exit</Tab>
+            <Tab onClick={(e) => {ipcRenderer.send('shrink')}}>Roll</Tab>
+            <Tab onClick={(e) => {ipcRenderer.send('large')}}>Settings</Tab>
+            <Tab onClick={(e) => {ipcRenderer.send('large')}}>Help</Tab>
+            <Tab onClick={(e) => {ipcRenderer.send('shrink'); ipcRenderer.send('close');}}>Exit</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -128,17 +127,20 @@ function App() {
                   Roll();
                 }}}>Roll!</Button>
               }
-              <div className="turn">Turn: {turn}</div>
-              <div className="turn-buttons">
-                  <Button width="100px" leftIcon={<FaLevelUpAlt/>} colorScheme='yellow' onClick={(e) => {
-                    ChangeTurn(turn + 1);
-                  }}>Turn</Button>
+              <div className="turn">
+                <span>
+                  <Button width="5px" leftIcon={<FaLevelUpAlt/>} colorScheme='yellow' onClick={(e) => {
+                      ChangeTurn(turn + 1);
+                    }}/>
+                </span>
+                &nbsp; Turn: {turn} &nbsp; 
+                <span>
+                  <Button width="5px" leftIcon={<FaLevelDownAlt/>} colorScheme='yellow' onClick={(e) => {
+                      ChangeTurn(turn - 1);
+                  }}/>
+                </span>
               </div>
-              <div className="turn-buttons">
-                <Button width="100px" leftIcon={<FaLevelDownAlt/>} colorScheme='yellow' onClick={(e) => {
-                    ChangeTurn(turn - 1);
-                }}>Turn</Button>
-              </div>
+
             </TabPanel>
             <TabPanel>
               <div className="setting">
