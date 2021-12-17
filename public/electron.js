@@ -31,6 +31,12 @@ function createWindow () {
 
     //load the index.html from a url
     win.loadURL('http://localhost:3000');
+
+    // make links open in browser: https://stackoverflow.com/questions/31749625/make-a-link-from-electron-open-in-browser
+    win.webContents.on('new-window', function(e, url) {
+        e.preventDefault();
+        require('electron').shell.openExternal(url);
+    });
 }
 
 // This method will be called when Electron has finished
