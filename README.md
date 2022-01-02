@@ -1,6 +1,14 @@
 # Super RNG Pets
 * A simple Electron Application to help play Super Auto Pets with an RNG twist
 
+## Installation
+* Go to the `releases` on the right.
+![Releases](https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/releases.png)
+* Click on the desired release and download the .exe (Windows Only)
+![Download](https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/download.png)
+* Ignore the download warnings (I promise it's not a virus!)
+* Once downloaded, run the .exe whenever you want to try Super RNG Pets!
+
 ## Technical Details
 * Create-React-App and React.js
 * ElectronJS
