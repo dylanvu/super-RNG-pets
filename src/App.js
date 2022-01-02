@@ -24,7 +24,7 @@ function App() {
   const [turn, setTurn] = useState(1);
   const [rolling, setRolling] = useState(false)
   const [number, setNumber] = useState(0);
-  const [action, setAction] = useState("Freeze/Unfreeze");
+  const [action, setAction] = useState("Click to Roll");
   const [prevAction, setPrevaction] = useState("");
   const [freeze, setFreeze] = useState(false);
   const [unique, setUnique] = useState(false);

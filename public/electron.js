@@ -18,7 +18,7 @@ function createWindow () {
         },
         autoHideMenuBar: true,
         frame: false,
-        icon: path.join(__dirname, '/sloth.ico'),
+        icon: path.join(__dirname, '/icon.png'),
         'use-content-size': true,
         'enablePreferredSizeMode': true
     })
@@ -28,8 +28,11 @@ function createWindow () {
     // Disable resizing
     win.setResizable(false);
 
-    //load the index.html from a url
-    win.loadURL('http://localhost:3000');
+    //load the index.html from a url, localhost (DEV ONLY)
+    // win.loadURL('http://localhost:3000');
+
+    // load for application dist
+    win.loadURL(`file://${path.join(__dirname, '../build/index.html')}`)
 
     // make links open in browser: https://stackoverflow.com/questions/31749625/make-a-link-from-electron-open-in-browser
     win.webContents.on('new-window', function(e, url) {

@@ -18,6 +18,9 @@ const Help = () => {
                             You choose positioning
                         </li>
                         <li>
+                            Recommended: Sell a pet only if your bench is full
+                        </li>
+                        <li>
                             Keep rolling until you use all your gold
                         </li>
                         <li>
