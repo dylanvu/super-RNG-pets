@@ -1,11 +1,17 @@
 # Super RNG Pets
 * A simple Electron Application to help play Super Auto Pets with an RNG twist
 
-![Super RNG Pets](https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets.png)
+<p align="center">
+  <img alt="Super RNG Pets" src="https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets.png" />
+</p>
 
-![Super RNG Pets Help](https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets-help.png)
+<p align="center">
+  <img alt="Super RNG Pets Help" src="https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets-help.png" />
+</p>
 
-![Super RNG Pets Settings](https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets-settings.png)
+<p align="center">
+  <img alt="Super RNG Pets Settings" src="https://github.com/vu-dylan/super-RNG-pets/blob/main/documentation/super-rng-pets-settings.png" />
+</p>
 
 ## Installation
 * Go to the `releases` on the right.
